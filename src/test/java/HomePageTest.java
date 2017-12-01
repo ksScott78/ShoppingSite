@@ -2,21 +2,11 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Wait;
-import com.google.common.base.Function;
 
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class HomePageTest {
 
@@ -24,26 +14,6 @@ public class HomePageTest {
     private static WebDriver webDriver;
     private HomePage home;
     private Actions builder;
-
-
-
-
-   private void continueToShop(){
-       Wait<WebDriver> wait = new FluentWait<WebDriver>(webDriver).withTimeout(30,SECONDS).pollingEvery(5, SECONDS).ignoring(NoSuchElementException.class);
-
-       WebElement continueShopping = wait.until(new Function<WebDriver, WebElement>(){
-           public WebElement apply(WebDriver webDriver){
-               return webDriver.findElement(By.cssSelector("#layer_cart > div.clearfix > div.layer_cart_cart.col-xs-12.col-md-6 > div.button-container > span"));
-           }
-       });
-       continueShopping.click();
-   }
-
-
-    private void moveAndClick(WebElement target){
-        builder.moveToElement(target).click().release().perform();
-    }
-
 
     @Before
     public void setUp() {
@@ -75,13 +45,18 @@ public class HomePageTest {
         Assert.assertEquals(img1, home.getImage1());
     }
 
-
-
     @Test
-    public void testAddToCart(){
+    public void testAddToCart() throws InterruptedException{
         builder.moveToElement(home.hoverItem1()).perform();
         home.item1Add.click();
-        moveAndClick(home.continueShopping);
+        Thread.sleep(2000);
         Assert.assertEquals("1", home.getCartSize());
+        builder.moveByOffset(-400,0).click().release().perform();
+        Thread.sleep(2000);
+        builder.moveToElement(home.hoverItem2()).perform();
+        home.item2Add.click();
+        Thread.sleep(2000);
+        Assert.assertEquals("2", home.getCartSize());
+        Thread.sleep(2000);
     }
 }

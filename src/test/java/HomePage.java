@@ -17,16 +17,19 @@ public class HomePage {
     @FindBy(css="#homeslider > li:nth-child(4) > a")
     WebElement image3;
 
-    @FindBy(css="#header > div:nth-child(3) > div > div > div:nth-child(3) > div > a > span.ajax_cart_quantity.unvisible")
-    WebElement cartLink;
-
     @FindBy(css="#homefeatured > li.ajax_block_product.col-xs-12.col-sm-4.col-md-3.first-in-line.first-item-of-tablet-line.first-item-of-mobile-line > div > div.right-block > div.button-container > a.button.ajax_add_to_cart_button.btn.btn-default")
     WebElement item1Add;
 
+    @FindBy(css="#homefeatured > li:nth-child(2) > div > div.right-block > div.button-container > a.button.ajax_add_to_cart_button.btn.btn-default")
+    WebElement item2Add;
+
     @FindBy(css = "#layer_cart > div.clearfix > div.layer_cart_cart.col-xs-12.col-md-6 > div.button-container > span > span")
     WebElement continueShopping;
+
     @FindBy(css="#homefeatured > li.ajax_block_product.col-xs-12.col-sm-4.col-md-3.first-in-line.first-item-of-tablet-line.first-item-of-mobile-line > div > div.left-block > div > a.product_img_link > img")
     WebElement hoverItem1;
+    @FindBy(css="#homefeatured > li:nth-child(2) > div > div.left-block > div > a.product_img_link > img")
+    WebElement hoverItem2;
 
     @FindBy(css="#header > div:nth-child(3) > div > div > div:nth-child(3) > div > a > span.ajax_cart_quantity")
     WebElement cartSize;
@@ -35,9 +38,11 @@ public class HomePage {
         return hoverItem1;
     }
 
+    public WebElement hoverItem2() { return hoverItem2; }
+
 
     public String getCartSize(){
-        return cartSize.getAttribute("value");
+        return cartSize.getText();
     }
 
     public void moveToLogin(){
